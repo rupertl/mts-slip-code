@@ -42,4 +42,4 @@ link:261-07.txt[]:: A writeup for little SLIP
 These files are all derived from distributions at
 https://bitsavers.org/bits/univOfMichigan/mts/ which are licensed as
 Creative Commons Attribution 3.0 Unported License (CC BY 3.0). See
-COPYRIGHT.txt[] for details.
+link:COPYRIGHT.txt[] for details.
