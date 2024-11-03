@@ -1,0 +1,266 @@
+$EMP DSLIPPRIMOBJ OK
+$CON *PRINT* HOLD
+$RUN W114:CCDSCN PAR=X=W114:LISTING.XECS
+$VERLAB TWO-WORD SLIPPRIM
+$R *ASMG SCARDS=DSLIPPRIM.S(8) SPRINT=*PRINT* SPUNCH=DSLIPPRIMOBJ 2=SLIPMACROS-
+ PAR=FX,COL=1,RLD,TEST,BATCH
+$SOURCE PREVIOUS
+*        PRIMITIVES 1 
+          TITLE     'SLIP PRIMITIVES' 
+          MACRO 
+&NAME     GETPART   &SIZ,&PRT 
+          LCLC      &C 
+          ENTRY     &NAME 
+&C        SETC      '&NAME'(1,1).'&NAME'(4,4) 
+          ENTRY     &C 
+          USING     *,15 
+&NAME     L         1,0(1) 
+&C        EQU       &NAME 
+          MVC       DATSP+8-&SIZ.(&SIZ),&PRT.(1) 
+          LD        0,DATSP 
+          L         0,DATSP+4 
+          BR        14 
+          MEND 
+SLIPPRIM  START     0 
+          TITLE     'SLIP PRIMITIVES - PARTIAL WORD FUNCTIONS' 
+CHR1      GETPART   1,0 
+CHR2      GETPART   1,1 
+CHR3      GETPART   1,2 
+CHR4      GETPART   1,3 
+CHR5      GETPART   1,4 
+CHR6      GETPART   1,5 
+CHR7      GETPART   1,6 
+CHR8      GETPART   1,7 
+QTR1      GETPART   2,0 
+QTR2      GETPART   2,2 
+QTR3      GETPART   2,4 
+QTR4      GETPART   2,6 
+HLF1      GETPART   4,0 
+HLF2      GETPART   4,4 
+DATSP     DC        D'0.0' 
+          TITLE     'SLIP PRIMITIVES - TERM AND VISIT' 
+VISIT     SINIT     SAVEAREA 
+          ST        2,RETURN+4          SAVE LOCATION OF PREVIOUS SAVE  AREA 
+          CNOP      0,4 
+SECOND    B         INIT                WILL BE REPLACED BY L 2,0(1) 
+          L         2,0(2) 
+          LR        5,1 
+         ST    14,RETURN 
+          ST        2,TOVISIT 
+ALLSET    LR        2,15 
+          CALL      NEWTOP,(RETURN,PUSHDOWN) 
+          USING     VISIT,2 
+          DROP      15 
+          LA        1,4(5) 
+          L         13,SAVEAREA+4 
+          L         15,TOVISIT 
+          LM        2,12,28(13) 
+          BALR      14,15 
+          NOP       0 
+          BAL       15,0 
+          USING     TERM,15 
+          ENTRY     TERM 
+TERM      L         15,=A(VISIT) 
+          USING     VISIT,15 
+          L         2,0(1) 
+          MVC       DATUMD(8),0(2) 
+          LR        2,15 
+          CALL      POPTOP,(PUSHDOWN) 
+          LR        15,2 
+          STD       0,TOP 
+          MVC       SAVEAREA+4(4),TOP+4 
+          L         0,DATUMD 
+          LD        0,DATUMD 
+          L         14,TOP 
+          L         13,SAVEAREA+4 
+          LM        2,12,28(13) 
+          MVI       12(13),X'FF' 
+          BCR       15,14 
+          USING     VISIT,15 
+INIT      L         2,WORD 
+          ST        2,SECOND 
+          LR        2,15 
+          LR        3,1 
+          LR        4,14 
+         CALL  LIST,(PUSHDOWN) 
+          LR        15,2 
+          LR        1,3 
+          LR        14,4 
+          STD       0,PUSHDOWN 
+          B         SECOND 
+ERROR     CALL      F4TRBK 
+PUSHDOWN  DC        D'0.0' 
+DATUMD    DC        D'0.0' 
+RETURN    EQU       DATUMD 
+TOVISIT   DC        D'0.0' 
+TOP       EQU       TOVISIT 
+WORD      L         2,0(1) 
+          TITLE     'SLIP PRIMITIVES' 
+J1        DC        D'0' 
+          END 
+SLPQQSV  CSECT
+          TITLE     'DLS' 
+DLS       SINIT     3 
+          L         2,0(1) 
+          L         3,4(1) 
+          LM        0,1,0(2) 
+          L         3,0(3) 
+          SLDL      0,0(3) 
+          STM       0,1,JJJ 
+          LD        0,JJJ 
+          SEXIT     3 
+          TITLE     'LS' 
+LS        SINIT     3 
+          L         2,0(1) 
+          L         3,4(1) 
+          L         0,0(2) 
+          LA        1,0 
+          L         3,0(3) 
+          SLDL      0,0(3) 
+          STM       0,1,JJJ 
+          LD        0,JJJ 
+          SEXIT     3 
+JJJ       DC        D'0.0' 
+          TITLE     'DRS' 
+DRS       SINIT     3 
+          L         2,0(1) 
+          L         3,4(1) 
+          LM        0,1,0(2) 
+          L         3,0(3) 
+          SRDL      0,0(3) 
+          STM       0,1,JJ 
+          LD        0,JJ 
+          SEXIT     3 
+          TITLE     'RS' 
+RS        SINIT     3 
+          L         2,0(1) 
+          L         3,4(1) 
+          L         0,0(2) 
+          LA        1,0 
+          L         3,0(3) 
+          SRDL      0,0(3) 
+          STM       0,1,JJ 
+          LD        0,JJ 
+          SEXIT     3 
+JJ        DC        D'0.0' 
+          TITLE     'EBX' 
+EBX       SINIT     5 
+          L         2,0(1) 
+          L         0,0(2) 
+          L         2,=X'FFFFFFFC'      -4 
+          LA        3,JUNK-2 
+       LA        4,JUNK+3 
+LOOP1     LA        5,4 
+LOOP2     SRDL      0,4 
+          SRL       1,28 
+          IC        1,TAB(1) 
+          STC       1,0(4,5) 
+          BCT       5,LOOP2 
+          BXH       4,2,LOOP1 
+          LD        0,JUNK 
+          SEXIT     5 
+JUNK      DC        D'0.0' 
+TAB       DC        C'0123456789ABCDEF' 
+          END 
+*        PRIMITIVES 2 
+QQSV     CSECT 
+          TITLE     'SLIP PRIMITIVES - LANORM' 
+LANORM    SINIT     2 
+          L         2,0(1) 
+          MVC       DATUM(8),0(2) 
+          LA        1,8                 COUNT 
+LOOP      CLI       DATUM,C' '          COMPARE WITH BLANK 
+          BNE       DONE 
+          MVC       DATUM(8),DATUM+1 
+          BCT       1,LOOP 
+DONE      LD        0,DATUM 
+          L         0,DATUM 
+          SEXIT     2 
+          TITLE     'SLIP PRIMITIVES - SHIN' 
+SHIN      SINIT     7 
+          L         2,0(1) 
+          L         5,0(2)              N 
+          L         4,4(1) 
+          LM        2,3,0(4)            DATUM 
+          L         4,8(1) 
+          LM        0,1,0(4)            DEST 
+          L         6,=X'FFFFFFFF'      MASK L 
+          L         7,=X'FFFFFFFF'      MASK R 
+          SLDL      6,0(5) 
+          SLDL      0,0(5) 
+          X         6,=X'FFFFFFFF'      INVERT MASK L 
+          X         7,=X'FFFFFFFF'      INVERT MASK ¢ 
+          NR        2,6 
+          NR        3,7 
+          OR        0,2 
+          OR        1,3 
+          STM       0,1,0(4) 
+          LD        0,0(4) 
+          SEXIT     7 
+          TITLE     'SLIP PRIMITIVES - SQIN' 
+SQIN      SINIT     7 
+          L         7,0(1)              ADDRESS OF MASK 
+          L         3,4(1)              ADDRESS OF DATUM 
+          L         1,8(1)              ADDRESS OF DEST 
+          LD        0,0(7)              MASK 
+          LTDR      0,0 
+          BNZ       NORMAL 
+          LD        0,0(1)              IF 0 MASK, SPECIAL CASE 
+          L         0,0(1) 
+          B         EXITSI 
+NORMAL    LM        4,5,0(3)            DATUM 
+          LM        2,3,0(7)            MASK 
+LOOPSI    LA        6,1 
+          NR        6,3 
+          BNZ       FINISH 
+          SRDL      2,1 
+          SLDL      4,1 
+          B         LOOPSI 
+FINISH    LM        2,3,0(7)            MASK 
+          NR        4,2 
+          NR        5,3 
+          X         2,=X'FFFFFFFF'      NEGATE MASK 
+          X         3,=X'FFFFFFFF' 
+          N         2,0(1) 
+          N         3,4(1) 
+          OR        4,2 
+          OR        5,3 
+          STM       4,5,0(1) 
+          LD        0,0(1) 
+          LR        0,4 
+EXITSI    SEXIT     7 
+          TITLE     'SLIP PRIMITIVES - SQOUT' 
+SQOUT     SINIT     5 
+          L         4,0(1) 
+          L         2,4(1) 
+          LM        0,1,0(2)            LOAD DATUM 
+          LM        2,3,0(4)            LOAD MASK 
+          NR        0,2                 MASK OUT LEFT 
+          NR        1,3                 MASK OUT RIGHT 
+          LA        5,64                COUNT 
+LOOPSO    LA        4,1 
+          NR        4,3 
+          BNZ       EXITSO 
+          SRDL      0,1 
+          SRDL      2,1 
+          BCT       5,LOOPSO 
+EXITSO    STM       0,1,DATUM 
+          LD        0,DATUM 
+          SEXIT     5 
+          TITLE     'SLIP PRIMITIVES - XMASK' 
+XMASK     SINIT     5 
+          LA        3,28(1)             COMPARAND 
+          LA        2,4                 INCREMENT 
+          LA        5,0(1) 
+LOOPMA    L         4,0(5) 
+          IC        1,3(4) 
+          SLL       1,28 
+          SLDL      0,4 
+          BXLE      5,2,LOOPMA 
+          ST        0,DATUM 
+          ST        0,DATUM+4 
+          LD        0,DATUM 
+          SEXIT     5 
+DATUM     DC        D'0.0' 
+          DC        CL1' ' 
+          END 

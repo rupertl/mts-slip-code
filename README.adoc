@@ -1,0 +1,45 @@
+= SLIP on MTS
+
+This repo contains source code from the
+https://en.wikipedia.org/wiki/Michigan_Terminal_System[Michigan
+Terminal System] relating to the
+https://en.wikipedia.org/wiki/SLIP_(programming_language)[SLIP]
+programming language. Quoting from
+https://babel.hathitrust.org/cgi/pt?id=mdp.39015026567852&seq=281[CC
+Memo 197]:
+
+[quote]
+This paper describes an implementation of SLIP (Symmetric List
+Processor) as currently supported by MTS. The language was designed by
+Prof. Joseph Weizenbaum of M.I.T.; the current version of SLIP
+embedded in FORTRAN IV, was developed at the Ford Motor Company
+Scientific Laboratory.
+
+Note there are two versions of SLIP on MTS: regular SLIP (`*SLIP`),
+which uses a 64 bit double precision floating point datum, and "little
+SLIP" (`UNSP:LSLIPLIB`) that uses a 32 but float.
+
+== Files
+
+These files are derived from MTS distribution 6.0 component 261. This
+does not include object code which is not of much use outside the MTS
+environment; if you wish to see this, restore component 261 to a
+running MTS system as per
+https://try-mts.com/restoring-files-from-tapes/[this article].
+
+[horizontal]
+link:261-01.f[]:: Fortran source code for `*SLIP`. MTS commands to
+assemble appear at the head of this file.
+link:261-02.a[]:: This is the assembly source for `*SLIP` primitives.
+Contains MTS commands at the front of the file for assembly.
+link:261-04.f[]:: This is a set of FORTRAN declarations for all SLIP functions.  It is to be used by programs which call the `*SLIP` package.
+link:261-05.f[]:: This subcomponent is the FORTRAN66 source for the
+"little SLIP" package.
+link:261-07.txt[]:: A writeup for little SLIP
+
+== License
+
+These files are all derived from distributions at
+https://bitsavers.org/bits/univOfMichigan/mts/ which are licensed as
+Creative Commons Attribution 3.0 Unported License (CC BY 3.0). See
+COPYRIGHT.txt[] for details.

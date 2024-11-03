@@ -1,0 +1,31 @@
+Copyright © 2011 by the Regents of the University of Michigan acting as agent
+for the MTS Consortium.
+
+Except as explicitly noted elsewhere for specific programs and files, this
+collection and the individual programs and files that it contains are licensed
+under the Creative Commons Attribution 3.0 Unported License (CC BY 3.0). This
+license allows you to use, copy, adapt, share, distribute, and transmit the work
+provided that you attribute the work by including this copyright statement and
+the name of the work, version number, volume reference, or date of publication
+that identifies the work in the copies or adaptations you make.
+
+To view a copy of the full license, visit
+http://creativecommons.org/licenses/by/3.0/ or send a letter to Creative
+Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+
+NO WARRANTIES and LIMITATION OF LIABILITY
+
+ALL USE of the programs, files, and documentation that make up the work is AT
+YOUR OWN RISK. Unless otherwise mutually agreed to by the parties in writing and
+to the fullest extent permitted by applicable law, licensor offers the work
+AS-IS and makes NO REPRESENTATIONS OR WARRANTIES OF ANY KIND concerning the
+work, express, implied, statutory or otherwise, including, without limitation,
+warranties of title, merchantability, fitness for a particular purpose,
+noninfringement, or the absence of latent or other defects, accuracy, or the
+presence or absence of errors, whether or not discoverable. Some jurisdictions
+do not allow the exclusion of implied warranties, so this exclusion may not
+apply to you. Except to the extent required by applicable law, in no event will
+licensor be liable to you on any legal theory for any special, incidental,
+consequential, punitive or exemplary damages arising out of this license or the
+use of the work, even if licensor has been advised of the possibility of such
+damages.

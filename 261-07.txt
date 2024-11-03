@@ -1,0 +1,24 @@
+$**$portrait,shift,margin=1.05
+:
+1
+-March 2, 1976
+-                            LSLIPLIB
+0Contents:      A library of FORTRAN-callable subroutines.
+0Purpose:       To  provide  list-processing   capabilities   for
+                FORTRAN users.
+0Location:      UNSP:LSLIPLIB
+0Use:           The file is concatenated to the object modules of
+                the calling program on the $RUN command, e.g.,
+0                         $RUN object+UNSP:LSLIPLIB
+0Description:   LSLIP  (Little  Symmetric  List  Processor)  is a
+                version of SLIP that uses single precision rather
+                than double precision real numbers.   A  complete
+                description  of the SLIP language may be found in
+                the Communications of  the  ACM,  Vol. 6,  No. 9,
++                   ______________ __  ___  ___
+                September, 1963, pp. 524-544.  SLIP is documented
+                in MTS Volume 8.
+8
+9
+9                   File: UNSP:LSLIPLIB.W --- UNSP Writeup --- LSLIP
+8
